@@ -1,9 +1,18 @@
-# SwiftJavascriptBridge
+SwiftJavascriptBridge
+=====================
 
-[![CI Status](http://img.shields.io/travis/Gaston Montes/SwiftJavascriptBridge.svg?style=flat)](https://travis-ci.org/Gaston Montes/SwiftJavascriptBridge)
+[![CI Status](http://img.shields.io/travis/Gaston%20Montes/SwiftJavascriptBridge.svg?style=flat)](https://travis-ci.org/Gaston Montes/SwiftJavascriptBridge)
 [![Version](https://img.shields.io/cocoapods/v/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 [![License](https://img.shields.io/cocoapods/l/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
+
+**************SE TOMÓ COMO BASE AFNetworking y WebViewJavascriptBridge***********************************
+
+An iOS bridge for sending messages between Swift and Javascript.
+
+SwiftJavascriptBridge is a Swift interface for bridging between WKWebView (Swift) and WebKit (Javascript).
+
+SwiftJavascriptBridge can be use to send message from Swift to Javascript, from Javascript to Swift or to receive messages in Swift from Javascript or in Javascript from Swift.
 
 ## Usage
 
@@ -20,10 +29,10 @@ it, simply add the following line to your Podfile:
 pod "SwiftJavascriptBridge"
 ```
 
-## Author
+## Credits
 
-Gaston Montes, gastonmontes@hotmail.com
+SwiftJavascriptBridge is owned and maintained by [Gastón Montes](<mailto:gastonmontes@hotmail.com>).
 
 ## License
 
-SwiftJavascriptBridge is available under the MIT license. See the LICENSE file for more info.
+SwiftJavascriptBridge is available under the BSD license. See the LICENSE file for more info.

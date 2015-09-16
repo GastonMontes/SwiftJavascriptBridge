@@ -1,40 +1,25 @@
-#
-# Be sure to run `pod lib lint SwiftJavascriptBridge.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = "SwiftJavascriptBridge"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of SwiftJavascriptBridge."
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
+  s.name             = 'SwiftJavascriptBridge'
+  s.version          = '0.0.1'
+  s.summary          = "An iOS bridge for sending messages between Swift and Javascript."
   s.description      = <<-DESC
+  An iOS bridge for sending messages between Swift and Javascript.
+  SwiftJavascriptBridge is a Swift interface for bridging between WKWebView (Swift) and WebKit (Javascript).
+  SwiftJavascriptBridge can be use to send message from Switf to Javascript, from Javascript to Swift or to recieve messages in Swift from Javascript or in Javascript from Swift.
                        DESC
-
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/SwiftJavascriptBridge"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
-  s.license          = 'MIT'
-  s.author           = { "Gaston Montes" => "gastonmontes@hotmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/SwiftJavascriptBridge.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
+  s.summary          = 'An iOS bridge for sending messages between Swift and Javascript.'
+  s.homepage         = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
+  s.license          = { :type => 'BSD', :file => 'LICENSE' }
+  s.author           = { 'Gaston Montes' => 'gastonmontes@hotmail.com' }
+  s.source           = { :git => "https://github.com/Elgatomontes/SwiftJavascriptBridge.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/ElgatitoMontes'
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-
   s.source_files = 'Pod/Classes/**/*'
   s.resource_bundles = {
     'SwiftJavascriptBridge' => ['Pod/Assets/*.png']
   }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.docset_url = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
+  s.documentation_url = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
+  s.ios.deployment_target = "8.0"
 end

@@ -1,0 +1,25 @@
+{
+  "name": "SwiftJavascriptBridge",
+  "version": "0.1.0",
+  "summary": "A short description of SwiftJavascriptBridge.",
+  "description": "",
+  "homepage": "https://github.com/<GITHUB_USERNAME>/SwiftJavascriptBridge",
+  "license": "MIT",
+  "authors": {
+    "Gaston Montes": "gastonmontes@hotmail.com"
+  },
+  "source": {
+    "git": "https://github.com/<GITHUB_USERNAME>/SwiftJavascriptBridge.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*",
+  "resource_bundles": {
+    "SwiftJavascriptBridge": [
+      "Pod/Assets/*.png"
+    ]
+  }
+}
