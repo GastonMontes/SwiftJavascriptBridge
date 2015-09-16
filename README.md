@@ -6,7 +6,7 @@ SwiftJavascriptBridge
 [![License](https://img.shields.io/cocoapods/l/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 
-**************SE TOMÓ COMO BASE AFNetworking y WebViewJavascriptBridge***********************************
+**************SE TOMÓ COMO BASE AFNetworking, WebViewJavascriptBridge y BlinkingLabel***********************************
 
 An iOS bridge for sending messages between Swift and Javascript.
 
