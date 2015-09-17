@@ -72,7 +72,6 @@
 		A45621040F1597DC7A78A5ACD3717CE0 /* ThrowError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C15A01A0422AD9E045072CEA03D8AE24 /* ThrowError.swift */; };
 		A720BC74A4EAC81D71A1C67398AF4699 /* DSL.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C7EED8422F11107ECDD841365312835 /* DSL.m */; };
 		A8C7BC8A3EAD5A1411233F2F67CE30DB /* QCKDSL.h in Headers */ = {isa = PBXBuildFile; fileRef = F85F408B1F4CBA7F1A207E70BC2843B0 /* QCKDSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AA17229218BE9D4CF0BA317B46C6DFB0 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DF1C86619269523D191EB3BF7649FE /* ReplaceMe.swift */; };
 		ADB2953E74F32D6ABDF626C97EABDFF2 /* Nimble-Snapshots-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 204F716D7F1C9141C9D44933D7A8FA63 /* Nimble-Snapshots-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B157607E05ADEA8751D444C92E375153 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C555CE37FEB460F73A9450692DA28692 /* XCTest.framework */; };
 		B358426C038E258308A198260A4E21D2 /* NMBExceptionCapture.h in Headers */ = {isa = PBXBuildFile; fileRef = 1EB8AB0AA2DA8FE8EFFDADF54DFEC350 /* NMBExceptionCapture.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -238,7 +237,6 @@
 		51FC5909D8B6C6E827608F2CAB81CE98 /* Pods_SwiftJavascriptBridge_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftJavascriptBridge_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		532C359F7B70AF6C58787CF1EB305F62 /* Nimble-Snapshots-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Nimble-Snapshots-prefix.pch"; sourceTree = "<group>"; };
 		548567AE036C69792F4EC6950EAC67F9 /* SwiftJavascriptBridge-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftJavascriptBridge-umbrella.h"; sourceTree = "<group>"; };
-		54DF1C86619269523D191EB3BF7649FE /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplaceMe.swift; sourceTree = "<group>"; };
 		554C4EAB1CBA05A60BEFB4F2B6B3984B /* Closures.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Closures.swift; path = Quick/Hooks/Closures.swift; sourceTree = "<group>"; };
 		5753E9677F70C5E791FAFA0B0864AE92 /* ExampleMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExampleMetadata.swift; path = Quick/ExampleMetadata.swift; sourceTree = "<group>"; };
 		5845EA9646E8C1A849D13C291E9EE0AC /* Nimble-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Nimble-Private.xcconfig"; sourceTree = "<group>"; };
@@ -418,7 +416,6 @@
 		01135E49C93789756B722384D65F6CAC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				54DF1C86619269523D191EB3BF7649FE /* ReplaceMe.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1044,7 +1041,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA17229218BE9D4CF0BA317B46C6DFB0 /* ReplaceMe.swift in Sources */,
 				9E3E794E790A02A805D633B9B5AD2CAB /* SwiftJavascriptBridge-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
