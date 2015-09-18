@@ -58,6 +58,8 @@
 		7F3FCF5447ED6D2E4D6CFA1BAA542296 /* DSL+Wait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A25FF575082742B7875115EAF2D301 /* DSL+Wait.swift */; };
 		80A742AC2F97EE37FA5904012016FA39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2C0FF3ABA8DF95C8A7B4F120B6F17CB /* Foundation.framework */; };
 		810D18A8B8142925F6630CF9DE439B00 /* SourceLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1E1F7EFC36620B9A8A1901B5BF45F4 /* SourceLocation.swift */; };
+		845E18B41BAB0B8900B5370F /* SwiftJavascriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18B31BAB0B8900B5370F /* SwiftJavascriptBridge.swift */; settings = {ASSET_TAGS = (); }; };
+		845E18B51BAB0B8900B5370F /* SwiftJavascriptBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845E18B31BAB0B8900B5370F /* SwiftJavascriptBridge.swift */; settings = {ASSET_TAGS = (); }; };
 		85BA134D8C5AA0EFB2395CFB887E0FE4 /* Pods-SwiftJavascriptBridge_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1343AAAC7ADEA518442C4D10A47FF6A7 /* Pods-SwiftJavascriptBridge_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8617C9D0B0321E11AA980D8C23F0F558 /* MatcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611C054CFF6FB69B2A62AA931EC64DBF /* MatcherProtocols.swift */; };
 		8BFD1967C5F123F50EED471AF54FC590 /* BeLessThanOrEqual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138223F3E1473C05DBE26431505C18D7 /* BeLessThanOrEqual.swift */; };
@@ -268,6 +270,7 @@
 		7E8A3BECC87E9DB806D343B4FD46A602 /* Example.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Example.swift; path = Quick/Example.swift; sourceTree = "<group>"; };
 		803A763573078A1C230D4F6B5C8BBDF4 /* Pods-SwiftJavascriptBridge_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftJavascriptBridge_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		825037EA67C0D284A9A6158319CDAA51 /* Quick.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Quick.h; path = Quick/Quick.h; sourceTree = "<group>"; };
+		845E18B31BAB0B8900B5370F /* SwiftJavascriptBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftJavascriptBridge.swift; sourceTree = "<group>"; };
 		84C8B91F0238C14D193BC7FD00BAAC98 /* QuickSpec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = QuickSpec.h; path = Quick/QuickSpec.h; sourceTree = "<group>"; };
 		85782C3B89AF62D998ADB4B3D90CEF7D /* BeLogical.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeLogical.swift; path = Nimble/Matchers/BeLogical.swift; sourceTree = "<group>"; };
 		8785D9DF519970819337DE8356C9D737 /* ExampleHooks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExampleHooks.swift; path = Quick/Hooks/ExampleHooks.swift; sourceTree = "<group>"; };
@@ -416,6 +419,7 @@
 		01135E49C93789756B722384D65F6CAC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				845E18B31BAB0B8900B5370F /* SwiftJavascriptBridge.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1042,6 +1046,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E3E794E790A02A805D633B9B5AD2CAB /* SwiftJavascriptBridge-dummy.m in Sources */,
+				845E18B41BAB0B8900B5370F /* SwiftJavascriptBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1049,6 +1054,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845E18B51BAB0B8900B5370F /* SwiftJavascriptBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1356,6 +1362,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1D0E4C1795E3FAE4C52A8EB06BFB90A /* SwiftJavascriptBridge-Private.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEFINES_MODULE = YES;
@@ -1507,10 +1514,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1D0E4C1795E3FAE4C52A8EB06BFB90A /* SwiftJavascriptBridge-Private.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = SwiftJavascriptBridge;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Pod/Classes/SwiftJavascriptBridge-SwiftJavascriptBridge-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -1519,6 +1530,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1D0E4C1795E3FAE4C52A8EB06BFB90A /* SwiftJavascriptBridge-Private.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEFINES_MODULE = YES;
@@ -1628,10 +1640,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1D0E4C1795E3FAE4C52A8EB06BFB90A /* SwiftJavascriptBridge-Private.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = SwiftJavascriptBridge;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "../../Pod/Classes/SwiftJavascriptBridge-SwiftJavascriptBridge-Bridging-Header.h";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
