@@ -37,7 +37,7 @@ public class FailureMessage: NSObject {
         var lines: [String] = (str as NSString).componentsSeparatedByString("\n") as [String]
         let whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet()
         lines = lines.map { line in line.stringByTrimmingCharactersInSet(whitespace) }
-        return lines.joinWithSeparator("")
+        return "".join(lines)
     }
 
     internal func computeStringValue() -> String {

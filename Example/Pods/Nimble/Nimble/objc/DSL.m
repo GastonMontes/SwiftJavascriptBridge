@@ -9,22 +9,18 @@ SWIFT_CLASS("_TtC6Nimble7NMBWait")
 
 @end
 
-NIMBLE_EXPORT NMBExpectation *NMB_expect(id(^actualBlock)(), NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBExpectation *NMB_expect(id(^actualBlock)(), const char *file, unsigned int line) {
     return [[NMBExpectation alloc] initWithActualBlock:actualBlock
                                               negative:NO
-                                                  file:file
+                                                  file:[[NSString alloc] initWithFormat:@"%s", file]
                                                   line:line];
 }
 
-NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), const char *file, unsigned int line) {
     return NMB_expect(^id{
         actualBlock();
         return nil;
     }, file, line);
-}
-
-NIMBLE_EXPORT void NMB_failWithMessage(NSString *msg, NSString *file, NSUInteger line) {
-    return [NMBExpectation failWithMessage:msg file:file line:line];
 }
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_beAnInstanceOf(Class expectedClass) {
