@@ -14,6 +14,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		843A14461BACB05D0037076E /* SwiftJavascriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A14451BACB05D0037076E /* SwiftJavascriptViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		843A14491BACB2DD0037076E /* SwiftJavascriptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A14481BACB2DD0037076E /* SwiftJavascriptViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		84BBC52F1BA9F14D007D49A4 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 84BBC52E1BA9F14D007D49A4 /* CHANGELOG.md */; settings = {ASSET_TAGS = (); }; };
 		EE9B2419959F628A745ADC47 /* Pods_SwiftJavascriptBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE10C2CC59911A88ECCA4D /* Pods_SwiftJavascriptBridge_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 		6AD106C5A3BA46380B5EEAA4 /* Pods-SwiftJavascriptBridge_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftJavascriptBridge_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftJavascriptBridge_Example/Pods-SwiftJavascriptBridge_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		83FF25894186DC400A693212 /* Pods-SwiftJavascriptBridge_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftJavascriptBridge_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftJavascriptBridge_Example/Pods-SwiftJavascriptBridge_Example.release.xcconfig"; sourceTree = "<group>"; };
 		843A14451BACB05D0037076E /* SwiftJavascriptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftJavascriptViewController.swift; sourceTree = "<group>"; };
+		843A14481BACB2DD0037076E /* SwiftJavascriptViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwiftJavascriptViewController.xib; sourceTree = "<group>"; };
 		84BBC52E1BA9F14D007D49A4 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		9C07F6145BA01E39998589F7 /* SwiftJavascriptBridge.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SwiftJavascriptBridge.podspec; path = ../SwiftJavascriptBridge.podspec; sourceTree = "<group>"; };
 		AC251DC458D2C5F2F8DB3173 /* Pods-SwiftJavascriptBridge_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftJavascriptBridge_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftJavascriptBridge_Tests/Pods-SwiftJavascriptBridge_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				843A14451BACB05D0037076E /* SwiftJavascriptViewController.swift */,
+				843A14481BACB2DD0037076E /* SwiftJavascriptViewController.xib */,
 			);
 			name = "Example for SwiftJavascriptBridge";
 			path = SwiftJavascriptBridge;
@@ -252,6 +255,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				843A14491BACB2DD0037076E /* SwiftJavascriptViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
