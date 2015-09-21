@@ -59,11 +59,13 @@ class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
         self.jsWebView = WKWebView(frame: CGRectMake(0, 0, 0, 0), configuration: self.jsWebViewConfiguration)
     }
     
-    func bridgeRemoveHandler() {
-        
+    func bridgeRemoveHandler(handlerName: String) {
+        self.handlersDictionary.removeObjectForKey(handlerName);
+        self.jsWebViewConfiguration.userContentController.removeScriptMessageHandlerForName(handlerName)
+        self.jsWebView = WKWebView(frame: CGRectMake(0, 0, 0, 0), configuration: self.jsWebViewConfiguration)
     }
     
-    func bridgeCallHandler() {
+    func bridgeCallHandler(jsHandlerName: String) {
         
     }
 }
