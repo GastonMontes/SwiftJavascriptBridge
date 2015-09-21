@@ -15,6 +15,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		843A14461BACB05D0037076E /* SwiftJavascriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A14451BACB05D0037076E /* SwiftJavascriptViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		843A14491BACB2DD0037076E /* SwiftJavascriptViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843A14481BACB2DD0037076E /* SwiftJavascriptViewController.xib */; settings = {ASSET_TAGS = (); }; };
+		844A58361BB05A83001EED4A /* SwiftJavascriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843A14451BACB05D0037076E /* SwiftJavascriptViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		84BBC52F1BA9F14D007D49A4 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 84BBC52E1BA9F14D007D49A4 /* CHANGELOG.md */; settings = {ASSET_TAGS = (); }; };
 		EE9B2419959F628A745ADC47 /* Pods_SwiftJavascriptBridge_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE10C2CC59911A88ECCA4D /* Pods_SwiftJavascriptBridge_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
@@ -377,6 +378,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				844A58361BB05A83001EED4A /* SwiftJavascriptViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

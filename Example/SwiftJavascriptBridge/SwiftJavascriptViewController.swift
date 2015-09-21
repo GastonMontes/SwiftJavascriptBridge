@@ -6,6 +6,7 @@
 //  Copyright © 2015 CocoaPods. All rights reserved.
 //
 
+import SwiftJavascriptBridge
 import Foundation
 import UIKit
 
@@ -14,9 +15,11 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     // MARK: - Constants.
     private let kNibName: String = "SwiftJavascriptViewController"
     private let kCellIdentifier = "ExampleCell"
+    private static let kJSWebURL = "https://dl.dropboxusercontent.com/u/64786881/HelloWorldJS.html"
     
     // MARK: - Vars.
     private var messagesFromJS = NSMutableDictionary()
+    private var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridgeForURLString(kJSWebURL)
     
     // MARK: - Initialization.
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
