@@ -9,10 +9,14 @@
 import Foundation
 import UIKit
 
-class SwiftJavascriptViewController: UIViewController {
+class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Constants.
     private let kNibName: String = "SwiftJavascriptViewController"
+    private let kCellIdentifier = "ExampleCell"
+    
+    // MARK: - Vars.
+    private var messagesFromJS = NSMutableDictionary()
     
     // MARK: - Initialization.
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -21,5 +25,15 @@ class SwiftJavascriptViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    // MARK: - UITableViewDatasource implementation.
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messagesFromJS.count;
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        return cell
     }
 }
