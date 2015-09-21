@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 import UIKit
 
-class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
+public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
     
     // MARK: - Vars.
     private var jsWebView: WKWebView?
@@ -26,14 +26,18 @@ class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
     // MARK: - Web view methods.
     private func initializeWebViewWithURL(urlString: String) {
         self.jsWebView = WKWebView(frame: CGRectMake(0, 0, 0, 0), configuration: self.jsWebViewConfiguration)
-        
         let url     = NSURL(string: urlString)
-        let request = NSURLRequest(URL: url!)
-        self.jsWebView!.loadRequest(request);
+        
+        if (url != nil) {
+            let request = NSURLRequest(URL: url!)
+            self.jsWebView!.loadRequest(request);
+        } else {
+            NSLog ("Bridge URL is not a valid URL: %@\n", urlString)
+        }
     }
     
     // MARK: - WKScriptMessageHandler implementation.
-    func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         // The name of the message handler to which the message is sent.
         let messageHandlerName = String(message.name)
         let objectHandler: AnyObject? = self.handlersDictionary.objectForKey(messageHandlerName)
@@ -47,7 +51,7 @@ class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
     }
     
     // MARK: - Bridge creation.
-    class func bridgeForURLString(urlString: String) -> AnyObject {
+    public class func bridgeForURLString(urlString: String) -> SwiftJavascriptBridge {
         let bridge: SwiftJavascriptBridge = SwiftJavascriptBridge(urlString: urlString)
         return bridge;
     }
