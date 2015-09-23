@@ -19,7 +19,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     
     // MARK: - Vars.
     private var messagesFromJS = NSMutableArray()
-    private var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridgeForURLString()
+    private var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
     @IBOutlet weak private var messagesTable: UITableView?
     
     // MARK: - Initialization.
@@ -51,7 +51,16 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
             safeMe.jsFunctionCalled(data)
         });
         
+        let data: NSDictionary = ["message" : "Message from Swift to JS."]
+        self.bridge.bridgeCallHandler("calledFromSwift()", data: data)
+        
+        self.bridge.bridgeAddHandler("calledBakcFromJS", handlerBlock: { (data: NSDictionary) -> Void in
+            let data: NSDictionary = ["message" : "Swift call back call other JS function."]
+            safeMe.bridge.bridgeCallHandler("calledFromSwift2()", data: data)
+        })
+        
         self.bridge.bridgeLoadScriptFromURL(kJSWebURL)
+        
     }
     
     // MARK: - UITableViewDatasource implementation.
