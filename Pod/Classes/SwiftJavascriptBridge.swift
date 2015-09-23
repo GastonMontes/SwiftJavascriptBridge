@@ -10,26 +10,29 @@ import Foundation
 import WebKit
 import UIKit
 
+public typealias HandlerClosure = (data: NSDictionary) -> Void
+
 public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
     
     // MARK: - Vars.
     private let jsWebViewConfiguration = WKWebViewConfiguration()
     private var jsWebView: WKWebView?
     private var scriptURLString: String?
-    private var handlersDictionary = NSMutableDictionary()
+    private var handlersDictionary = [String: HandlerClosure]()
     
     // MARK: - WKScriptMessageHandler implementation.
     public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         // The name of the message handler to which the message is sent.
         let messageHandlerName = String(message.name)
-        let objectHandler: AnyObject? = self.handlersDictionary.objectForKey(messageHandlerName)
-        let handlerSelector = Selector(messageHandlerName);
+        let messageBody   = message.body as! NSDictionary;
+        let closureHandler: HandlerClosure? = self.handlersDictionary[messageHandlerName]
         
-        if (objectHandler?.respondsToSelector(handlerSelector) == true) {
-            objectHandler!.performSelector(handlerSelector)
-        } else {
-            NSLog("Cannot handler function: %@\n", messageHandlerName);
-        }
+        closureHandler?(data: messageBody)
+    }
+    
+    // MARK: - Bridge initialization.
+    override init() {
+        super.init()
     }
     
     // MARK: - Bridge creation.
@@ -39,13 +42,13 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler {
     }
     
     // MARK: - Public methods.
-    public func bridgeAddHandler(objectHandler: AnyObject, handlerName: String) {
-        self.handlersDictionary.setObject(objectHandler, forKey: handlerName)
+    public func bridgeAddHandler(handlerName: String, handlerBlock: HandlerClosure) {
+        self.handlersDictionary[handlerName] = handlerBlock;
         self.jsWebViewConfiguration.userContentController.addScriptMessageHandler(self, name: handlerName)
     }
     
     public func bridgeRemoveHandler(handlerName: String) {
-        self.handlersDictionary.removeObjectForKey(handlerName);
+        self.handlersDictionary.removeValueForKey(handlerName)
         self.jsWebViewConfiguration.userContentController.removeScriptMessageHandlerForName(handlerName)
     }
     

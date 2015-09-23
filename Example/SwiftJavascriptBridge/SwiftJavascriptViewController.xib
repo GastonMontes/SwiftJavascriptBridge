@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SwiftJavascriptViewController" customModule="SwiftJavascriptBridge_Example" customModuleProvider="target">
             <connections>
+                <outlet property="messagesTable" destination="cBX-80-xUN" id="mzv-f6-4Xl"/>
                 <outlet property="view" destination="iN0-l3-epB" id="SJ9-nZ-QaR"/>
             </connections>
         </placeholder>

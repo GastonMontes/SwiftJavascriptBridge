@@ -18,8 +18,9 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     private let kJSWebURL = "https://dl.dropboxusercontent.com/u/64786881/JSSwiftBridge.html"
     
     // MARK: - Vars.
-    private var messagesFromJS = NSMutableDictionary()
+    private var messagesFromJS = NSMutableArray()
     private var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridgeForURLString()
+    @IBOutlet weak private var messagesTable: UITableView?
     
     // MARK: - Initialization.
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -34,7 +35,22 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.bridge.bridgeAddHandler(self, handlerName: "firstFunction")
+        self.messagesTable?.registerNib(UINib(nibName: NSStringFromClass(UITableViewCell), bundle: nil), forCellReuseIdentifier: kCellIdentifier)
+        self.messagesTable?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: kCellIdentifier)
+        
+        let safeMe = self
+        self.bridge.bridgeAddHandler("firstFunction", handlerBlock: { (data: NSDictionary) -> Void in
+            safeMe.jsFunctionCalled(data)
+        });
+        
+        self.bridge.bridgeAddHandler("secondFunction", handlerBlock: { (data: NSDictionary) -> Void in
+            safeMe.jsFunctionCalled(data)
+        });
+        
+        self.bridge.bridgeAddHandler("thirdFunction", handlerBlock: { (data: NSDictionary) -> Void in
+            safeMe.jsFunctionCalled(data)
+        });
+        
         self.bridge.bridgeLoadScriptFromURL(kJSWebURL)
     }
     
@@ -44,11 +60,16 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as UITableViewCell
+        let message = self.messagesFromJS.objectAtIndex(indexPath.row);
+        let messageString = message as! String;
+        cell.textLabel?.text = messageString;
         return cell
     }
     
     // MARK: - Functions to be called by JS.
-    func firstFunction() {
+    func jsFunctionCalled(body: NSDictionary) {
+        self.messagesFromJS.addObject(body.objectForKey("message")!);
+        self.messagesTable?.reloadData()
     }
 }
