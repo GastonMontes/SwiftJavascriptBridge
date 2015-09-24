@@ -101,6 +101,8 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     /**
     Add Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called,
     bridgeAddHandler is going to have no effect.
+    bridgeAddHandler() function can be called at any time, even before the page 
+    it is loaded.
     
     - Parameters:
         - handlerName: The name of the Swift handler to add.
@@ -128,6 +130,8 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     Call the JavasCript function called 'jsHandlerName'. 'jsHandlerName' must be 
     declared in the page loaded in bridgeLoadScriptFromURL() function or the call 
     is going to have no effect.
+    bridgeCallHandler() function can be called at any time, even before the page 
+    it is loaded.
     
     - Parameters:
         - jsHandlerName: The JavasCript function name to call. The 'jsHandlerName' 

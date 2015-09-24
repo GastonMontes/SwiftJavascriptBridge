@@ -31,50 +31,73 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         super.init(coder: aDecoder)
     }
     
+    // MARK: - Private methods.
+    private func addSwiftHandlers() {
+        // Add handlers that are going to be called from JavasCript with messages.
+        weak var safeMe = self
+        self.bridge.bridgeAddHandler("noDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive no data.
+            safeMe?.printMessage("noDataHandler handler called from JS.")
+        });
+        
+        self.bridge.bridgeAddHandler("stringDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a string as data.
+            let message = data as! String;
+            safeMe?.printMessage(message)
+        })
+        
+        self.bridge.bridgeAddHandler("arrayDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive an array as data.
+            let listMessages = data as! Array<String>;
+            
+            for message in listMessages {
+                safeMe?.printMessage(message)
+            }
+        })
+        
+        self.bridge.bridgeAddHandler("dictionaryDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a dictionary as data.
+            let dataDic = data as! Dictionary<String, String>
+            safeMe?.printMessage(dataDic["message"])
+        })
+        
+        self.bridge.bridgeAddHandler("callBackToJS", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a dictionary as data with a message. Prints the message and call 
+            // back a JS function with the same dictionary.
+            
+            // Prints the message.
+            let dataDic = data as! Dictionary<String, String>
+            safeMe?.printMessage(dataDic["message"])
+            
+            // Call JS Function with param.
+            safeMe?.bridge.bridgeCallHandler("swiftCallBackJSFunction", data: dataDic)
+        })
+        
+        self.bridge.bridgeAddHandler("handlerToPrintMessages", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a message and print it.
+            let message = data as! String;
+            safeMe?.printMessage(message)
+        })
+    }
+    
+    private func callJSFunctions() {
+        
+    }
+    
     // MARK: - View life cycle.
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Register table cells.
         self.messagesTable?.registerNib(UINib(nibName: NSStringFromClass(UITableViewCell), bundle: nil), forCellReuseIdentifier: kCellIdentifier)
         self.messagesTable?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: kCellIdentifier)
         
-        let safeMe = self
-        self.bridge.bridgeAddHandler("firstFunction", handlerClosure: { (data: AnyObject?) -> Void in
-            let dataDictionary = data as! NSDictionary
-            safeMe.jsFunctionCalled(dataDictionary)
-        });
-        
-        self.bridge.bridgeAddHandler("secondFunction", handlerClosure: { (data: AnyObject?) -> Void in
-            let dataDictionary = data as! NSDictionary
-            safeMe.jsFunctionCalled(dataDictionary)
-        });
-        
-        self.bridge.bridgeAddHandler("thirdFunction", handlerClosure: { (data: AnyObject?) -> Void in
-            let dataDictionary = data as! NSDictionary
-            safeMe.jsFunctionCalled(dataDictionary)
-        });
-        
-        self.bridge.bridgeAddHandler("showMessage", handlerClosure: { (data: AnyObject?) -> Void in
-            let dataString = data as! String
-            safeMe.messagesFromJS.addObject(dataString);
-            safeMe.messagesTable?.reloadData()
-        });
-        
-        self.bridge.bridgeCallHandler("calledFromSwift", data: nil)
-        
-        self.bridge.bridgeAddHandler("calledBackFromJS", handlerClosure: { (data: AnyObject?) -> Void in
-            let dataDictionary = data as! NSDictionary
-            safeMe.jsFunctionCalled(dataDictionary)
-            safeMe.bridge.bridgeCallHandler("calledFromSwift2", data: nil)
-        })
-        
-        self.bridge.bridgeCallHandler("callFirstFunction", data: nil)
-        self.bridge.bridgeCallHandler("callSecondFunction", data: nil)
-        self.bridge.bridgeCallHandler("callThirdFunction", data: nil)
-        
-        self.bridge.bridgeCallHandler("showMessage", data: ["message" : "Calling function 'showMessage' from Swift"])
+        // Add Swift Handlers to bridge. This handlers are going to be called from JS.
+        self.addSwiftHandlers()
         
         self.bridge.bridgeLoadScriptFromURL(kJSWebURL)
+        
+        self.callJSFunctions()
     }
     
     // MARK: - UITableViewDatasource implementation.
@@ -90,9 +113,9 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
     
-    // MARK: - Functions to be called by JS.
-    func jsFunctionCalled(body: NSDictionary!) {
-        self.messagesFromJS.addObject(body.objectForKey("message")!);
+    // MARK: - Functions to be print message from JS.
+    func printMessage(message: String!) {
+        self.messagesFromJS.addObject(message);
         self.messagesTable?.reloadData()
     }
 }
