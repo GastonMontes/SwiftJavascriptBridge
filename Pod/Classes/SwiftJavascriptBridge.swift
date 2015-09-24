@@ -26,7 +26,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     private let jsWebViewConfiguration = WKWebViewConfiguration()
     private var jsWebView: WKWebView?
     private var handlersDictionary = [String: HandlerClosure]()
-    private var jsHandlersList = NSMutableArray()
+    private var jsHandlersList: Array<Dictionary<String, AnyObject>> = Array<Dictionary<String, AnyObject>>()
     
     // MARK: - WKScriptMessageHandler implementation.
     public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
@@ -54,8 +54,8 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         if (NSJSONSerialization.isValidJSONObject(jsonData)) {
             do {
                 let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonData, options: NSJSONWritingOptions())
-                let dataString = NSString(data: jsonData, encoding: NSASCIIStringEncoding)!
-                return dataString as String
+                let dataString = String(data: jsonData, encoding: NSASCIIStringEncoding)!
+                return dataString
             } catch {
                 print(kJSONDataCreationErrorText + String(error))
                 return nil
@@ -87,9 +87,9 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         return functionName
     }
     
-    private func callJSFunction(jsHandler: NSDictionary) {
-        let handlerName: String = jsHandler.objectForKey(kJSHandlerNameKey) as! String
-        let handleData: AnyObject? = jsHandler.objectForKey(kJSDataToSendKey)
+    private func callJSFunction(jsHandler: Dictionary<String, AnyObject>) {
+        let handlerName: String = jsHandler[kJSHandlerNameKey] as! String
+        let handleData: AnyObject? = jsHandler[kJSDataToSendKey]
         
         let functionName = String(self.createJSFunctionName(handlerName, functionArguments: handleData))
         
@@ -103,7 +103,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     // MARK: - WKNavigationDelegate implementation.
     public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
         for jsHandler in self.jsHandlersList {
-            self.callJSFunction(jsHandler as! NSDictionary)
+            self.callJSFunction(jsHandler as Dictionary<String, AnyObject>)
         }
     }
     
@@ -154,15 +154,15 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
             - Be a Double, Float, Int or String.
     */
     public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?) {
-        let handler: NSMutableDictionary = [kJSHandlerNameKey : jsFunctionName]
+        var handler: Dictionary<String, AnyObject> = [kJSHandlerNameKey : jsFunctionName]
         if (data != nil) {
-            handler.setObject(data!, forKey: kJSDataToSendKey)
+            handler.updateValue(data!, forKey: kJSDataToSendKey)
         }
         
         if (self.jsWebView != nil && self.jsWebView?.loading == false) {
-            self.callJSFunction(handler as NSDictionary)
+            self.callJSFunction(handler as Dictionary)
         } else {
-            self.jsHandlersList.addObject(handler as NSDictionary)
+            self.jsHandlersList.append(handler as Dictionary)
         }
     }
     
