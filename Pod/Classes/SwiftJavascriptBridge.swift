@@ -50,10 +50,10 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     }
     
     // MARK: - Private Methods.
-    private func dataToJSONString(jsonDictionary: AnyObject!) -> String? {
-        if (NSJSONSerialization.isValidJSONObject(jsonDictionary)) {
+    private func dataToJSONString(jsonData: AnyObject!) -> String? {
+        if (NSJSONSerialization.isValidJSONObject(jsonData)) {
             do {
-                let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonDictionary, options: NSJSONWritingOptions())
+                let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonData, options: NSJSONWritingOptions())
                 let dataString = NSString(data: jsonData, encoding: NSASCIIStringEncoding)!
                 return dataString as String
             } catch {
@@ -70,6 +70,16 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         
         if (functionArguments?.count > 0) {
             functionName += "(\(dataToJSONString(functionArguments!)!))"
+        } else if let aString = functionArguments as? String {
+            functionName += "(\"" + aString + "\")"
+        } else if let aDouble = functionArguments as? Double {
+            if (aDouble % 1 > 0) {
+                // Is a Double.
+                functionName = String(format: "%@(\"%.9f\")", functionName, aDouble)
+            } else {
+                // Is an Int.
+                functionName = String(format: "%@(\"%.0f\")", functionName, aDouble)
+            }
         } else {
             functionName += "()"
         }
@@ -127,25 +137,24 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     }
     
     /**
-    Call the JavasCript function called 'jsHandlerName'. 'jsHandlerName' must be 
+    Call the JavasCript function called 'jsFunctionName'. 'jsFunctionName' must be 
     declared in the page loaded in bridgeLoadScriptFromURL() function or the call 
     is going to have no effect.
     bridgeCallHandler() function can be called at any time, even before the page 
     it is loaded.
     
     - Parameters:
-        - jsHandlerName: The JavasCript function name to call. The 'jsHandlerName' 
+        - jsFunctionName: The JavasCript function name to call. The 'jsFunctionName'
     function name should not have parentheses.
         - data: An object that must be converted to a JSON data object. 'data' must 
     have the following properties:
-            - Top level object is an NSArray or NSDictionary
-            - All objects are NSString, NSNumber, NSArray, NSDictionary, or NSNull
-            - All dictionary keys are NSStrings
-            - NSNumbers are not NaN or infinity
+            - Top level object is an Array or Dictionary
+            - All objects are String, Double, Int or Float.
+            - All dictionary keys are Strings.
+            - Be a Double, Float, Int or String.
     */
-    public func bridgeCallHandler(jsHandlerName: String, data: AnyObject?) {
-        let handler: NSMutableDictionary = [kJSHandlerNameKey : jsHandlerName]
-        
+    public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?) {
+        let handler: NSMutableDictionary = [kJSHandlerNameKey : jsFunctionName]
         if (data != nil) {
             handler.setObject(data!, forKey: kJSDataToSendKey)
         }

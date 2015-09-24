@@ -18,7 +18,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     private let kJSWebURL = "https://dl.dropboxusercontent.com/u/64786881/JSSwiftBridge.html"
     
     // MARK: - Vars.
-    private var messagesFromJS = NSMutableArray()
+    private var messagesFromJS: Array<String> = Array<String>()
     private var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
     @IBOutlet weak private var messagesTable: UITableView?
     
@@ -37,12 +37,26 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         weak var safeMe = self
         self.bridge.bridgeAddHandler("noDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
             // Handler that receive no data.
-            safeMe?.printMessage("noDataHandler handler called from JS.")
+            safeMe?.printMessage("JS says: Calling noDataHandler.")
         });
         
         self.bridge.bridgeAddHandler("stringDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
             // Handler that receive a string as data.
             let message = data as! String;
+            safeMe?.printMessage(message)
+        })
+        
+        self.bridge.bridgeAddHandler("integerDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a string as data.
+            let number = data as! Int
+            let message = String(format: "%@ %i.", "JS says: Calling integerDataHandler:", number)
+            safeMe?.printMessage(message)
+        })
+        
+        self.bridge.bridgeAddHandler("doubleDataHandler", handlerClosure: { (data: AnyObject?) -> Void in
+            // Handler that receive a string as data.
+            let number = data as! Double
+            let message = String(format: "%@ %.9f", "JS says: Calling doubleDataHandler:", number)
             safeMe?.printMessage(message)
         })
         
@@ -70,7 +84,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
             safeMe?.printMessage(dataDic["message"])
             
             // Call JS Function with param.
-            safeMe?.bridge.bridgeCallHandler("swiftCallBackJSFunction", data: dataDic)
+            safeMe?.bridge.bridgeCallFunction("swiftCallBackJSFunction", data: dataDic)
         })
         
         self.bridge.bridgeAddHandler("handlerToPrintMessages", handlerClosure: { (data: AnyObject?) -> Void in
@@ -81,7 +95,27 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     private func callJSFunctions() {
+        // Note: All JS functions then call handlerToPrintMessages handler to print a message.
+        // Call a JS Function without arguments.
+        self.bridge.bridgeCallFunction("swiftCallWithNoData", data: nil)
         
+        // Call a JS Function with a String as arguments.
+        let message = String("Swift says: swiftCallWithStringData called.")
+        self.bridge.bridgeCallFunction("swiftCallWithStringData", data: message)
+        
+        // Call a JS Function with an Int as arguments.
+        self.bridge.bridgeCallFunction("swiftCallWithIntegerData", data: 4)
+        
+        // Call a JS Function with a Double as arguments.
+        self.bridge.bridgeCallFunction("swiftCallWithDoubleData", data: 8.32743)
+        
+        // Call a JS Function with an Array as arguments.
+        let messages: [String] = ["Swift says: swiftCallWithArrayData called.", "Swift says: swiftCallWithArrayData called. (2)"]
+        self.bridge.bridgeCallFunction("swiftCallWithArrayData", data: messages)
+        
+        // Call a JS Function with a Dictionary as arguments.
+        let messageDict: [String : String] = ["message" : "Swift says: swiftCallWithDictionaryData called."]
+        self.bridge.bridgeCallFunction("swiftCallWithDictionaryData", data: messageDict)
     }
     
     // MARK: - View life cycle.
@@ -107,15 +141,16 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier, forIndexPath: indexPath) as UITableViewCell
-        let message = self.messagesFromJS.objectAtIndex(indexPath.row);
-        let messageString = message as! String;
+        let message = self.messagesFromJS[indexPath.row];
+        let messageString = String(message)
         cell.textLabel?.text = messageString;
+        cell.textLabel?.font = UIFont(name: cell.textLabel!.font.fontName, size: 11)
         return cell
     }
     
     // MARK: - Functions to be print message from JS.
     func printMessage(message: String!) {
-        self.messagesFromJS.addObject(message);
+        self.messagesFromJS.append(message)
         self.messagesTable?.reloadData()
     }
 }
