@@ -10,7 +10,7 @@ import Foundation
 import WebKit
 import UIKit
 
-public typealias HandlerClosure = (data: NSDictionary) -> Void
+public typealias HandlerClosure = (data: AnyObject?) -> Void
 
 // MARK: - Constants.
 private let kJSDataToSendKey: String = "data"
@@ -32,7 +32,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
         // The name of the message handler to which the message is sent.
         let messageHandlerName = String(message.name)
-        let messageBody   = message.body as! NSDictionary;
+        let messageBody   = message.body;
         let closureHandler: HandlerClosure? = self.handlersDictionary[messageHandlerName]
         
         closureHandler?(data: messageBody)

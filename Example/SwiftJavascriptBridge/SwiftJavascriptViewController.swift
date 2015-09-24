@@ -39,22 +39,32 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         self.messagesTable?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: kCellIdentifier)
         
         let safeMe = self
-        self.bridge.bridgeAddHandler("firstFunction", handlerBlock: { (data: NSDictionary) -> Void in
-            safeMe.jsFunctionCalled(data)
+        self.bridge.bridgeAddHandler("firstFunction", handlerBlock: { (data: AnyObject?) -> Void in
+            let dataDictionary = data as! NSDictionary
+            safeMe.jsFunctionCalled(dataDictionary)
         });
         
-        self.bridge.bridgeAddHandler("secondFunction", handlerBlock: { (data: NSDictionary) -> Void in
-            safeMe.jsFunctionCalled(data)
+        self.bridge.bridgeAddHandler("secondFunction", handlerBlock: { (data: AnyObject?) -> Void in
+            let dataDictionary = data as! NSDictionary
+            safeMe.jsFunctionCalled(dataDictionary)
         });
         
-        self.bridge.bridgeAddHandler("thirdFunction", handlerBlock: { (data: NSDictionary) -> Void in
-            safeMe.jsFunctionCalled(data)
+        self.bridge.bridgeAddHandler("thirdFunction", handlerBlock: { (data: AnyObject?) -> Void in
+            let dataDictionary = data as! NSDictionary
+            safeMe.jsFunctionCalled(dataDictionary)
+        });
+        
+        self.bridge.bridgeAddHandler("showMessage", handlerBlock: { (data: AnyObject?) -> Void in
+            let dataString = data as! String
+            safeMe.messagesFromJS.addObject(dataString);
+            safeMe.messagesTable?.reloadData()
         });
         
         self.bridge.bridgeCallHandler("calledFromSwift", data: nil)
         
-        self.bridge.bridgeAddHandler("calledBackFromJS", handlerBlock: { (data: NSDictionary) -> Void in
-            safeMe.jsFunctionCalled(data)
+        self.bridge.bridgeAddHandler("calledBackFromJS", handlerBlock: { (data: AnyObject?) -> Void in
+            let dataDictionary = data as! NSDictionary
+            safeMe.jsFunctionCalled(dataDictionary)
             safeMe.bridge.bridgeCallHandler("calledFromSwift2", data: nil)
         })
         
@@ -81,7 +91,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     // MARK: - Functions to be called by JS.
-    func jsFunctionCalled(body: NSDictionary) {
+    func jsFunctionCalled(body: NSDictionary!) {
         self.messagesFromJS.addObject(body.objectForKey("message")!);
         self.messagesTable?.reloadData()
     }
