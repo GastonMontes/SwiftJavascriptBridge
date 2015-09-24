@@ -51,21 +51,20 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
             safeMe.jsFunctionCalled(data)
         });
         
-        let data: NSDictionary = ["message" : "Message from Swift to JS."]
-        self.bridge.bridgeCallHandler("calledFromSwift()", data: data)
+        self.bridge.bridgeCallHandler("calledFromSwift", data: nil)
         
         self.bridge.bridgeAddHandler("calledBackFromJS", handlerBlock: { (data: NSDictionary) -> Void in
-            let newData: NSDictionary = ["message" : "Swift call back call other JS function."]
             safeMe.jsFunctionCalled(data)
-            safeMe.bridge.bridgeCallHandler("calledFromSwift2()", data: newData)
+            safeMe.bridge.bridgeCallHandler("calledFromSwift2", data: nil)
         })
         
-        self.bridge.bridgeCallHandler("callFirstFunction()", data: data)
-        self.bridge.bridgeCallHandler("callSecondFunction()", data: data)
-        self.bridge.bridgeCallHandler("callThirdFunction()", data: data)
+        self.bridge.bridgeCallHandler("callFirstFunction", data: nil)
+        self.bridge.bridgeCallHandler("callSecondFunction", data: nil)
+        self.bridge.bridgeCallHandler("callThirdFunction", data: nil)
+        
+        self.bridge.bridgeCallHandler("showMessage", data: ["message" : "Calling function 'showMessage' from Swift"])
         
         self.bridge.bridgeLoadScriptFromURL(kJSWebURL)
-        
     }
     
     // MARK: - UITableViewDatasource implementation.
