@@ -123,7 +123,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         
         // Register table cells.
-        self.messagesTable?.registerNib(UINib(nibName: NSStringFromClass(UITableViewCell), bundle: nil), forCellReuseIdentifier: kCellIdentifier)
+        self.messagesTable?.registerNib(UINib(nibName: String(class_getName(UITableViewCell)), bundle: nil), forCellReuseIdentifier: kCellIdentifier)
         self.messagesTable?.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: kCellIdentifier)
         
         // Add Swift Handlers to bridge. This handlers are going to be called from JS.
