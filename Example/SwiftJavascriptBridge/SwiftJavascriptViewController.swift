@@ -131,6 +131,7 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
         
         self.bridge.bridgeLoadScriptFromURL(kJSWebURL)
         
+        // Call JS functions.
         self.callJSFunctions()
     }
     
