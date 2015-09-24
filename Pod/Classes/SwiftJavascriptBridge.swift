@@ -98,16 +98,47 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     }
     
     // MARK: - Public methods.
-    public func bridgeAddHandler(handlerName: String, handlerBlock: HandlerClosure) {
-        self.handlersDictionary[handlerName] = handlerBlock;
+    /**
+    Add Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called,
+    bridgeAddHandler is going to have no effect.
+    
+    - Parameters:
+        - handlerName: The name of the Swift handler to add.
+        - handlerClosure: The closure (block code) that is going to be called when
+    JavaScript call the Swift 'handlerName' handler.
+    */
+    public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure) {
+        self.handlersDictionary[handlerName] = handlerClosure;
         self.jsWebViewConfiguration.userContentController.addScriptMessageHandler(self, name: handlerName)
     }
     
+    /**
+    Remove Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, 
+    bridgeRemoveHandler is going to have no effect.
+    
+    - Parameters:
+        - handlerName: The name of the Swift handler to remove.
+    */
     public func bridgeRemoveHandler(handlerName: String) {
         self.handlersDictionary.removeValueForKey(handlerName)
         self.jsWebViewConfiguration.userContentController.removeScriptMessageHandlerForName(handlerName)
     }
     
+    /**
+    Call the JavasCript function called 'jsHandlerName'. 'jsHandlerName' must be 
+    declared in the page loaded in bridgeLoadScriptFromURL() function or the call 
+    is going to have no effect.
+    
+    - Parameters:
+        - jsHandlerName: The JavasCript function name to call. The 'jsHandlerName' 
+    function name should not have parentheses.
+        - data: An object that must be converted to a JSON data object. 'data' must 
+    have the following properties:
+            - Top level object is an NSArray or NSDictionary
+            - All objects are NSString, NSNumber, NSArray, NSDictionary, or NSNull
+            - All dictionary keys are NSStrings
+            - NSNumbers are not NaN or infinity
+    */
     public func bridgeCallHandler(jsHandlerName: String, data: AnyObject?) {
         let handler: NSMutableDictionary = [kJSHandlerNameKey : jsHandlerName]
         
@@ -122,6 +153,14 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         }
     }
     
+    /** 
+    Load the 'urlString's' page that contains JavasCript code. After the page load,
+    JavasCript functions can call Swift handlers and Swift function can call
+    JavasCript functions.
+    
+    - Parameters:
+        - urlString: The string of the URL to load.
+    */
     public func bridgeLoadScriptFromURL(urlString : String) {
         let url = NSURL(string: urlString)
         if (url != nil) {
