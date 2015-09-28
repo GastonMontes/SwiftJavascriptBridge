@@ -91,6 +91,22 @@ pod "SwiftJavascriptBridge"
 - If you **want to contribute**, submit a pull request.
 - If you **want to contact** the owner of the project, write an email to [Gastón Montes](<mailto:gastonmontes@hotmail.com>).
 
+## Architecture
+
+### SwiftJavascriptBridge
+
+#### Swift 
+
+- `public func bridgeLoadScriptFromURL(urlString : String)`
+- `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?)`
+- `public func bridgeRemoveHandler(handlerName: String)`
+- `public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure)`
+
+
+
+
+
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
