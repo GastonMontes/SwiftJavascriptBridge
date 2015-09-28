@@ -102,10 +102,74 @@ pod "SwiftJavascriptBridge"
 - `public func bridgeRemoveHandler(handlerName: String)`
 - `public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure)`
 
+## API Reference
 
+### Swift API
 
+#### `public func bridgeLoadScriptFromURL(urlString : String)
 
+Load the 'urlString's' page that contains JavasCript code. After the page load, JavasCript functions can call Swift handlers and Swift function can call JavasCript functions.
 
+* `Parameters:
+	- urlString: The string of the URL to load.
+
+Example:
+
+```Swift	
+var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
+self.bridge.bridgeLoadScriptFromURL("URLToLoad")
+```
+
+#### `public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure)`
+
+ Add Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeAddHandler is going to have no effect. bridgeAddHandler() function can be called at any time, even before the page is loaded.
+    
+* ´Parameters:
+	- handlerName: The name of the Swift handler to add.
+	- handlerClosure: The closure (block code) that is going to be called when JavaScript call the Swift 'handlerName' handler.
+
+Example:
+
+```Swift	
+var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
+self.bridge.bridgeAddHandler("aHandlerName", handlerClosure: { (data: AnyObject?) -> Void in
+	// Handler called from JS.
+	NSLog(@"Handler called from JS.", nil);
+});
+```
+
+#### `public func bridgeRemoveHandler(handlerName: String)`
+
+Remove Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeRemoveHandler is going to have no effect.
+    
+* `Parameters:
+	- handlerName: The name of the Swift handler to remove.
+
+Example:
+
+```Swift	
+var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
+self.bridge.bridgeRemoveHandler("aHandlerName")
+```
+
+#### `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?)`
+
+Call the JavasCript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
+
+* `Parameters`:
+	- jsFunctionName: The JavasCript function name to call. The 'jsFunctionName' function name should not have parentheses.
+	- data: An object that must be converted to a JSON data object. 'data' must have the following properties:
+		+ Top level object is an Array or Dictionary
+        + All objects are String, Double, Int or Float.
+		+ All dictionary keys are Strings.
+		+ Be a Double, Float, Int or String.
+
+Example:
+
+```Swift	
+var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
+self.bridge.bridgeCallFunction("swiftCallJSFunction", data: nil)
+```
 
 ## Usage
 
