@@ -1,18 +1,7 @@
 PODS:
-  - FBSnapshotTestCase (1.8.1)
-  - Nimble (2.0.0-rc.3)
-  - Nimble-Snapshots (1.0.0):
-    - FBSnapshotTestCase (~> 1.7)
-    - Nimble (~> 2.0.0-rc.2)
-    - Quick (~> 0.5)
-  - Quick (0.6.0)
-  - SwiftJavascriptBridge (0.0.1)
+  - SwiftJavascriptBridge (1.0.1)
 
 DEPENDENCIES:
-  - FBSnapshotTestCase
-  - Nimble
-  - Nimble-Snapshots
-  - Quick
   - SwiftJavascriptBridge (from `../`)
 
 EXTERNAL SOURCES:
@@ -20,10 +9,6 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: 3dc3899168747a0319c5278f5b3445c13a6532dd
-  Nimble: 9dff98ee195ffe7351d3b2fb01d3a1420fd97948
-  Nimble-Snapshots: c16dd279a4840ec06288198fafd53f3c17750ff3
-  Quick: 563686dbcf0ae0f9f7401ac9cd2d786ee1b7f3d7
-  SwiftJavascriptBridge: f3dc6168a5afaeb7ac8dc10b8931f9e0aa31c68c
+  SwiftJavascriptBridge: 93a5ec095955fbbb23e4b46840ae77208f843c5c
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0.beta.4

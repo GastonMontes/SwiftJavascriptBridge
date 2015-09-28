@@ -7,9 +7,4 @@ end
 
 target 'SwiftJavascriptBridge_Tests', :exclusive => true do
   pod "SwiftJavascriptBridge", :path => "../"
-
-  pod 'Quick'
-  pod 'Nimble'
-  pod 'FBSnapshotTestCase'
-  pod 'Nimble-Snapshots'
 end
