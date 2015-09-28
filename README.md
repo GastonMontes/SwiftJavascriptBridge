@@ -189,4 +189,4 @@ SwiftJavascriptBridge is owned and maintained by [Gastón Montes](<mailto:gaston
 
 ## License
 
-SwiftJavascriptBridge is available under the BSD license. See the LICENSE file for more info.
+SwiftJavascriptBridge is available under the BSD license. See the `LICENSE` file for more info.
