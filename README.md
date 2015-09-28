@@ -20,7 +20,7 @@ SwiftJavascriptBridge can be use to send message from Swift to Javascript, from 
 
 ## Get Started
 
-- 1) Download Cocoapods
+### 1) Download Cocoapods
 -----------------------
 [CocoaPods](http://cocoapods.org) is a dependency manager for iOS, which automates and simplifies the process of using 3rd-party libraries in your projects.
 
@@ -31,7 +31,7 @@ $ sudo gem install cocoapods
 $ pod setup
 ```
 
-- 2) Create Podfile
+### 2) Create Podfile
 -------------------
 In the project root folder, run the following command to create a Podfile:
 
@@ -41,7 +41,7 @@ $ pod init YOURXCODEPROJECTFILE
 
 If an `YOURXCODEPROJECTFILE` project file is specified or if there is only a single project file in the current directory, targets will be automatically generated based on targets defined in the project.
 
-- 3) Add dependencies:
+## 3) Add dependencies:
 An empty Podfile was created, so we are going to add dependencies to the Podfile specifying pods versions:
 
 To use the latest version of a Pod, ommit the version specification:
@@ -64,7 +64,7 @@ Using `optimistic` operators:
 - `'~> 0.1.0'`, Version 0.1.0 or higher up to 0.2, not including 0.2.
 - `'~> 0.1'`, Version 0.1 or higher up to 1.0, not including 1.0.
 
-- 4) Install dependencies
+### 4) Install dependencies
 -------------------------
 Install Pods dependencies in your project. Run the following commands:
 
@@ -106,11 +106,11 @@ pod "SwiftJavascriptBridge"
 
 ### Swift API
 
-#### `public func bridgeLoadScriptFromURL(urlString : String)
+#### `public func bridgeLoadScriptFromURL(urlString : String)`
 
 Load the 'urlString's' page that contains JavasCript code. After the page load, JavasCript functions can call Swift handlers and Swift function can call JavasCript functions.
 
-* `Parameters:
+* `Parameters´:
 	- urlString: The string of the URL to load.
 
 Example:
@@ -124,7 +124,7 @@ self.bridge.bridgeLoadScriptFromURL("URLToLoad")
 
  Add Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeAddHandler is going to have no effect. bridgeAddHandler() function can be called at any time, even before the page is loaded.
     
-* ´Parameters:
+* `Parameters`:
 	- handlerName: The name of the Swift handler to add.
 	- handlerClosure: The closure (block code) that is going to be called when JavaScript call the Swift 'handlerName' handler.
 
@@ -142,7 +142,7 @@ self.bridge.bridgeAddHandler("aHandlerName", handlerClosure: { (data: AnyObject?
 
 Remove Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeRemoveHandler is going to have no effect.
     
-* `Parameters:
+* `Parameters`:
 	- handlerName: The name of the Swift handler to remove.
 
 Example:
@@ -175,7 +175,7 @@ self.bridge.bridgeCallFunction("swiftCallJSFunction", data: nil)
 
 An example project is included with this repo. To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-´NOTE´: The Example project use `Nimble 2.0.0rc` testing framework that works with iOS 8.3 or higher. So, the development target of the Example project is 8.3, but the SwiftJavascriptBridge works with iOS 7.0 or higher.
+`NOTE`: The Example project use `Nimble 2.0.0rc` testing framework that works with iOS 8.3 or higher. So, the development target of the Example project is 8.3, but the SwiftJavascriptBridge works with iOS 7.0 or higher.
 
 ## Contributors & Forks
 
