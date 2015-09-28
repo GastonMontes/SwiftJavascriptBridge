@@ -6,7 +6,7 @@ branches:
  
 xcode_project: _Pods.xcodeproj
 xcode_scheme: SwiftJavascriptBridge
-osx_image: Xcode
+osx_image: xcode7
 xcode_sdk: iphonesimulator8.3 
  
 script:
