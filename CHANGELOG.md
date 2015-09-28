@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased][unreleased]
 
 
-## [1.0.0]() - 2015-09-28
+## [1.0.0](https://github.com/Elgatomontes/SwiftJavascriptBridge/releases/tag/1.0.0) - 2015-09-28
 
 ### Added
 - `SwiftJavascriptBridge` to conect Javascriptfunctions with Swift Handlers.
