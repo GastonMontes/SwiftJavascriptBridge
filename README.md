@@ -175,8 +175,6 @@ self.bridge.bridgeCallFunction("swiftCallJSFunction", data: nil)
 
 An example project is included with this repo. To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-`NOTE`: The Example project use `Nimble 2.0.0rc` testing framework that works with iOS 8.3 or higher. So, the development target of the Example project is 8.3, but the SwiftJavascriptBridge works with iOS 8.0 or higher.
-
 ## Contributors & Forks
 
 Contributors: https://github.com/Elgatomontes/SwiftJavascriptBridge/graphs/contributors
