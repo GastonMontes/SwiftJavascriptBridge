@@ -25,7 +25,8 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     // MARK: - Vars.
     private let jsWebViewConfiguration = WKWebViewConfiguration()
     private var jsWebView: WKWebView?
-    private var handlersDictionary = [String: HandlerClosure]()
+    private var handlersDictionary = [String : HandlerClosure]()
+    private var callBackDictionary = [String : HandlerClosure]()
     private var jsHandlersList: Array<Dictionary<String, AnyObject>> = Array<Dictionary<String, AnyObject>>()
     
     // MARK: - WKScriptMessageHandler implementation.
@@ -90,12 +91,17 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     private func callJSFunction(jsHandler: Dictionary<String, AnyObject>) {
         let handlerName: String = jsHandler[kJSHandlerNameKey] as! String
         let handleData: AnyObject? = jsHandler[kJSDataToSendKey]
+        let callBackClosure: HandlerClosure? = self.callBackDictionary[handlerName]
         
         let functionName = String(self.createJSFunctionName(handlerName, functionArguments: handleData))
         
         self.jsWebView?.evaluateJavaScript(functionName, completionHandler: { (response : AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 print(kEvaluateScriptErrorText + functionName + " - " + String(error))
+            } else {
+                if (response != nil && callBackClosure != nil) {
+                    callBackClosure!(data: response!)
+                }
             }
         })
     }
@@ -152,11 +158,17 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
             - All objects are String, Double, Int or Float.
             - All dictionary keys are Strings.
             - Be a Double, Float, Int or String.
+        - callBackClosure: The closure (block code) that is going to be called if
+    JavaScript function called return something.
     */
-    public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?) {
+    public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?) {
         var handler: Dictionary<String, AnyObject> = [kJSHandlerNameKey : jsFunctionName]
         if (data != nil) {
             handler.updateValue(data!, forKey: kJSDataToSendKey)
+        }
+        
+        if (callBackClosure != nil) {
+            self.callBackDictionary[jsFunctionName] = callBackClosure!
         }
         
         if (self.jsWebView != nil && self.jsWebView?.loading == false) {

@@ -84,38 +84,63 @@ class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITa
             safeMe?.printMessage(dataDic["message"])
             
             // Call JS Function with param.
-            safeMe?.bridge.bridgeCallFunction("swiftCallBackJSFunction", data: dataDic)
-        })
-        
-        self.bridge.bridgeAddHandler("handlerToPrintMessages", handlerClosure: { (data: AnyObject?) -> Void in
-            // Handler that receive a message and print it.
-            let message = data as! String;
-            safeMe?.printMessage(message)
+            safeMe?.bridge.bridgeCallFunction("swiftCallBackJSFunction", data: dataDic, callBackClosure: { (data: AnyObject?) -> Void in
+                let dataDictionary = data as! Dictionary<String, String>
+                let message: String = dataDictionary["message"]! + " (2)"
+                safeMe?.printMessage(message)
+            })
         })
     }
     
     private func callJSFunctions() {
         // Note: All JS functions then call handlerToPrintMessages handler to print a message.
+        weak var safeMe = self
+        
         // Call a JS Function without arguments.
-        self.bridge.bridgeCallFunction("swiftCallWithNoData", data: nil)
+        self.bridge.bridgeCallFunction("swiftCallWithNoData", data: nil, callBackClosure: { (data: AnyObject?) -> Void in
+            let message = data as! String
+            safeMe?.printMessage(message)
+        })
         
         // Call a JS Function with a String as arguments.
         let message = String("Swift says: swiftCallWithStringData called.")
-        self.bridge.bridgeCallFunction("swiftCallWithStringData", data: message)
-        
+        self.bridge.bridgeCallFunction("swiftCallWithStringData", data: message, callBackClosure: { (data: AnyObject?) -> Void in
+            let message: String! = data as! String
+            safeMe?.printMessage(message)
+        })
+
         // Call a JS Function with an Int as arguments.
-        self.bridge.bridgeCallFunction("swiftCallWithIntegerData", data: 4)
-        
+        self.bridge.bridgeCallFunction("swiftCallWithIntegerData", data: Int(4), callBackClosure: { (data: AnyObject?) -> Void in
+            let integerData = data as! Int
+            let message = String(format: "Swift says: swiftCallWithIntegerData called: %i.", integerData)
+            safeMe?.printMessage(message)
+            
+        })
+
         // Call a JS Function with a Double as arguments.
-        self.bridge.bridgeCallFunction("swiftCallWithDoubleData", data: 8.32743)
-        
+        self.bridge.bridgeCallFunction("swiftCallWithDoubleData", data: Double(8.32743), callBackClosure: { (data: AnyObject?) -> Void in
+            let doubleData = data as! Double
+            let message = String(format: "Swift says: swiftCallWithDoubleData called: %.9f.", doubleData)
+            safeMe?.printMessage(message)
+        })
+
         // Call a JS Function with an Array as arguments.
         let messages: [String] = ["Swift says: swiftCallWithArrayData called.", "Swift says: swiftCallWithArrayData called. (2)"]
-        self.bridge.bridgeCallFunction("swiftCallWithArrayData", data: messages)
-        
+        self.bridge.bridgeCallFunction("swiftCallWithArrayData", data: messages, callBackClosure: { (data: AnyObject?) -> Void in
+            let messagesData = data as! [String]
+            
+            for message: String in messagesData {
+                safeMe?.printMessage(message)
+            }
+        })
+
         // Call a JS Function with a Dictionary as arguments.
         let messageDict: [String : String] = ["message" : "Swift says: swiftCallWithDictionaryData called."]
-        self.bridge.bridgeCallFunction("swiftCallWithDictionaryData", data: messageDict)
+        self.bridge.bridgeCallFunction("swiftCallWithDictionaryData", data: messageDict, callBackClosure: { (data: AnyObject?) -> Void in
+            let dataDictionary = data as! Dictionary<String, String>
+            let message: String! = dataDictionary["message"]
+            safeMe?.printMessage(message)
+        })
     }
     
     // MARK: - View life cycle.

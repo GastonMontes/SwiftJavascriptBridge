@@ -152,7 +152,7 @@ var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
 self.bridge.bridgeRemoveHandler("aHandlerName")
 ```
 
-#### `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?)`
+#### `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?)`
 
 Call the JavasCript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
 
@@ -163,6 +163,7 @@ Call the JavasCript function called 'jsFunctionName'. 'jsFunctionName' must be d
         + All objects are String, Double, Int or Float.
 		+ All dictionary keys are Strings.
 		+ Be a Double, Float, Int or String.
+	- callBackClosure: The closure (block code) that is going to be called if JavaScript function called return something.
 
 Example:
 
