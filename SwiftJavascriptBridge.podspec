@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftJavascriptBridge'
-  s.version          = '1.0.1'
+  s.version          = '1.1.0'
   s.summary          = "An iOS bridge for sending messages between Swift and Javascript."
   s.description      = <<-DESC
   An iOS bridge for sending messages between Swift and Javascript.

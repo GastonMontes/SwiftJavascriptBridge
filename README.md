@@ -16,7 +16,9 @@ SwiftJavascriptBridge can be use to send message from Swift to Javascript, from 
 
 | SwiftJavascriptBridge Version |     Minimum iOS Target      |      Minimum OS X Target     |               Notes              |
 |:-----------------------------:|:---------------------------:|:----------------------------:|:--------------------------------:|
-|             1.0.0             |            iOS 7            |           OS X 10.10.4       |        Xcode 7 is required.      |
+|             1.1.0             |           iOS 8.0           |           OS X 10.10.4       |        Xcode 7 is required.      |
+|             1.0.1             |           iOS 8.3           |           OS X 10.10.4       |        Xcode 7 is required.      |
+|             1.0.0             |           iOS 8.3           |           OS X 10.10.4       |        Xcode 7 is required.      |
 
 ## Get Started
 
@@ -51,7 +53,7 @@ pod 'SwiftJavascriptBridge'
 
 Freezing to a specific Pod version:
 ```ruby
-pod 'SwiftJavascriptBridge', '0.0.1'
+pod 'SwiftJavascriptBridge', '1.1.0'
 ```
 
 Using `logical` operators:
