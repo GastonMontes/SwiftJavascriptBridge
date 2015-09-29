@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage         = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
   s.license          = { :type => 'BSD', :file => 'LICENSE' }
   s.author           = { 'Gaston Montes' => 'gastonmontes@hotmail.com' }
-  s.source           = { :git => "git@github.com:Elgatomontes/SwiftJavascriptBridge.git", :branch => "master", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/Elgatomontes/SwiftJavascriptBridge.git", :branch => "master", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/ElgatitoMontes'
   s.platform     = :ios, '8.0'
   s.requires_arc = true
