@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 
 class SwiftJavascriptViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
     // MARK: - Constants.
     private let kNibName: String = "SwiftJavascriptViewController"
     private let kCellIdentifier = "ExampleCell"
