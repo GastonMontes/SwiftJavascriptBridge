@@ -22,7 +22,7 @@ SwiftJavascriptBridge can be use to send message from Swift to Javascript, from 
 
 ## Get Started
 
-### 1) Download Cocoapods
+### 1) Download CocoaPods
 -----------------------
 [CocoaPods](http://cocoapods.org) is a dependency manager for iOS, which automates and simplifies the process of using 3rd-party libraries in your projects.
 
