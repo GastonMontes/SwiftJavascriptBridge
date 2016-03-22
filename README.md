@@ -46,7 +46,7 @@ If an `YOURXCODEPROJECTFILE` project file is specified or if there is only a sin
 ## 3) Add dependencies:
 An empty Podfile was created, so we are going to add dependencies to the Podfile specifying pods versions:
 
-To use the latest version of a Pod, ommit the version specification:
+To use the latest version of a Pod, omit the version specification:
 ```ruby
 pod 'SwiftJavascriptBridge'
 ```
@@ -97,7 +97,7 @@ pod "SwiftJavascriptBridge"
 
 ### SwiftJavascriptBridge
 
-#### Swift 
+#### Swift
 
 - `public func bridgeLoadScriptFromURL(urlString : String)`
 - `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?)`
@@ -110,14 +110,14 @@ pod "SwiftJavascriptBridge"
 
 #### `public func bridgeLoadScriptFromURL(urlString : String)`
 
-Load the 'urlString's' page that contains JavasCript code. After the page load, JavasCript functions can call Swift handlers and Swift function can call JavasCript functions.
+Load the 'urlString's' page that contains Javascript code. After the page load, Javascript functions can call Swift handlers and Swift function can call Javascript functions.
 
 * `Parameters´:
 	- urlString: The string of the URL to load.
 
 Example:
 
-```Swift	
+```Swift
 var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
 self.bridge.bridgeLoadScriptFromURL("URLToLoad")
 ```
@@ -125,14 +125,14 @@ self.bridge.bridgeLoadScriptFromURL("URLToLoad")
 #### `public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure)`
 
  Add Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeAddHandler is going to have no effect. bridgeAddHandler() function can be called at any time, even before the page is loaded.
-    
+
 * `Parameters`:
 	- handlerName: The name of the Swift handler to add.
-	- handlerClosure: The closure (block code) that is going to be called when JavaScript call the Swift 'handlerName' handler.
+	- handlerClosure: The closure (block code) that is going to be called when Javascript call the Swift 'handlerName' handler.
 
 Example:
 
-```Swift	
+```Swift
 var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
 self.bridge.bridgeAddHandler("aHandlerName", handlerClosure: { (data: AnyObject?) -> Void in
 	// Handler called from JS.
@@ -143,33 +143,33 @@ self.bridge.bridgeAddHandler("aHandlerName", handlerClosure: { (data: AnyObject?
 #### `public func bridgeRemoveHandler(handlerName: String)`
 
 Remove Swift 'handlerName' handler. Until bridgeLoadScriptFromURL() not called, bridgeRemoveHandler is going to have no effect.
-    
+
 * `Parameters`:
 	- handlerName: The name of the Swift handler to remove.
 
 Example:
 
-```Swift	
+```Swift
 var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
 self.bridge.bridgeRemoveHandler("aHandlerName")
 ```
 
 #### `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?)`
 
-Call the JavasCript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
+Call the Javascript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
 
 * `Parameters`:
-	- jsFunctionName: The JavasCript function name to call. The 'jsFunctionName' function name should not have parentheses.
+	- jsFunctionName: The Javascript function name to call. The 'jsFunctionName' function name should not have parentheses.
 	- data: An object that must be converted to a JSON data object. 'data' must have the following properties:
 		+ Top level object is an Array or Dictionary
         + All objects are String, Double, Int or Float.
 		+ All dictionary keys are Strings.
 		+ Be a Double, Float, Int or String.
-	- callBackClosure: The closure (block code) that is going to be called if JavaScript function called return something.
+	- callBackClosure: The closure (block code) that is going to be called if Javascript function called return something.
 
 Example:
 
-```Swift	
+```Swift
 var bridge: SwiftJavascriptBridge = SwiftJavascriptBridge.bridge()
 self.bridge.bridgeCallFunction("swiftCallJSFunction", data: nil)
 ```
