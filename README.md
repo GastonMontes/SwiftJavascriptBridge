@@ -6,11 +6,11 @@ SwiftJavascriptBridge
 [![License](https://img.shields.io/cocoapods/l/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 [![Platform](https://img.shields.io/cocoapods/p/SwiftJavascriptBridge.svg?style=flat)](http://cocoapods.org/pods/SwiftJavascriptBridge)
 
-An iOS bridge for sending messages between Swift and Javascript.
+An iOS bridge for sending messages between Swift and JavaScript.
 
-SwiftJavascriptBridge is a Swift interface for bridging between WKWebView (Swift) and WebKit (Javascript).
+SwiftJavascriptBridge is a Swift interface for bridging between WKWebView (Swift) and WebKit (JavaScript).
 
-SwiftJavascriptBridge can be use to send message from Swift to Javascript, from Javascript to Swift or to receive messages in Swift from Javascript or in Javascript from Swift.
+SwiftJavascriptBridge can be use to send message from Swift to JavaScript, from JavaScript to Swift or to receive messages in Swift from JavaScript or in JavaScript from Swift.
 
 ## Requirements
 
@@ -110,7 +110,7 @@ pod "SwiftJavascriptBridge"
 
 #### `public func bridgeLoadScriptFromURL(urlString : String)`
 
-Load the 'urlString's' page that contains Javascript code. After the page load, Javascript functions can call Swift handlers and Swift function can call Javascript functions.
+Load the 'urlString's' page that contains JavaScript code. After the page load, JavaScript functions can call Swift handlers and Swift function can call JavaScript functions.
 
 * `Parameters´:
 	- urlString: The string of the URL to load.
@@ -128,7 +128,7 @@ self.bridge.bridgeLoadScriptFromURL("URLToLoad")
 
 * `Parameters`:
 	- handlerName: The name of the Swift handler to add.
-	- handlerClosure: The closure (block code) that is going to be called when Javascript call the Swift 'handlerName' handler.
+	- handlerClosure: The closure (block code) that is going to be called when JavaScript call the Swift 'handlerName' handler.
 
 Example:
 
@@ -156,16 +156,16 @@ self.bridge.bridgeRemoveHandler("aHandlerName")
 
 #### `public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?)`
 
-Call the Javascript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
+Call the JavaScript function called 'jsFunctionName'. 'jsFunctionName' must be declared in the page loaded in bridgeLoadScriptFromURL() function or the call is going to have no effect. bridgeCallHandler() function can be called at any time, even before the page it is loaded.
 
 * `Parameters`:
-	- jsFunctionName: The Javascript function name to call. The 'jsFunctionName' function name should not have parentheses.
+	- jsFunctionName: The JavaScript function name to call. The 'jsFunctionName' function name should not have parentheses.
 	- data: An object that must be converted to a JSON data object. 'data' must have the following properties:
 		+ Top level object is an Array or Dictionary
         + All objects are String, Double, Int or Float.
 		+ All dictionary keys are Strings.
 		+ Be a Double, Float, Int or String.
-	- callBackClosure: The closure (block code) that is going to be called if Javascript function called return something.
+	- callBackClosure: The closure (block code) that is going to be called if JavaScript function called return something.
 
 Example:
 
