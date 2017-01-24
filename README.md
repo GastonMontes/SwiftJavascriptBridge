@@ -16,6 +16,7 @@ SwiftJavascriptBridge can be use to send message from Swift to Javascript, from 
 
 | SwiftJavascriptBridge Version |     Minimum iOS Target      |      Minimum OS X Target     |               Notes              |
 |:-----------------------------:|:---------------------------:|:----------------------------:|:--------------------------------:|
+|             1.2.0             |           iOS 8.0           |           OS X 10.11.5       |        Xcode 8 is required.      |
 |             1.1.0             |           iOS 8.0           |           OS X 10.10.4       |        Xcode 7 is required.      |
 |             1.0.1             |           iOS 8.3           |           OS X 10.10.4       |        Xcode 7 is required.      |
 |             1.0.0             |           iOS 8.3           |           OS X 10.10.4       |        Xcode 7 is required.      |
