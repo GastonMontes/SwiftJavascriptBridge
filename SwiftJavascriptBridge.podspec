@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftJavascriptBridge'
-  s.version          = '1.1.0'
+  s.version          = '1.2.0'
   s.summary          = "An iOS bridge for sending messages between Swift and Javascript."
   s.description      = <<-DESC
   An iOS bridge for sending messages between Swift and Javascript.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.resource_bundles = {
     'SwiftJavascriptBridge' => ['Pod/Assets/*.png']
   }
-  s.docset_url = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
-  s.documentation_url = 'https://github.com/Elgatomontes/SwiftJavascriptBridge'
+  s.docset_url = 'https://github.com/GastonMontes/SwiftJavascriptBridge'
+  s.documentation_url = 'https://github.com/GastonMontes/SwiftJavascriptBridge'
   s.ios.deployment_target = "8.0"
 end
