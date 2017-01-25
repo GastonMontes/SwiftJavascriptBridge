@@ -1,6 +1,0 @@
-framework module Pods_SwiftJavascriptBridge_Example {
-  umbrella header "Pods-SwiftJavascriptBridge_Example-umbrella.h"
-
-  export *
-  module * { export * }
-}

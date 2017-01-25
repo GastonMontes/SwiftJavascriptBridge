@@ -9,8 +9,32 @@
 import Foundation
 import WebKit
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public typealias HandlerClosure = (data: AnyObject?) -> Void
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+public typealias HandlerClosure = (_ data: AnyObject?) -> Void
 
 // MARK: - Constants.
 private let kJSDataToSendKey: String = "data"
@@ -20,23 +44,23 @@ private let kEvaluateScriptErrorText: String = "SwiftJavascriptBridge - Evaluate
 private let kJSONDataCreationErrorText: String = "SwiftJavascriptBridge - JSON data creation Error: "
 
 // WKNavigationDelegate, WKUIDelegate
-public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
+open class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
     
     // MARK: - Vars.
-    private let jsWebViewConfiguration = WKWebViewConfiguration()
-    private var jsWebView: WKWebView?
-    private var handlersDictionary = [String : HandlerClosure]()
-    private var callBackDictionary = [String : HandlerClosure]()
-    private var jsHandlersList: Array<Dictionary<String, AnyObject>> = Array<Dictionary<String, AnyObject>>()
+    fileprivate let jsWebViewConfiguration = WKWebViewConfiguration()
+    fileprivate var jsWebView: WKWebView?
+    fileprivate var handlersDictionary = [String : HandlerClosure]()
+    fileprivate var callBackDictionary = [String : HandlerClosure]()
+    fileprivate var jsHandlersList: Array<Dictionary<String, AnyObject>> = Array<Dictionary<String, AnyObject>>()
     
     // MARK: - WKScriptMessageHandler implementation.
-    public func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    open func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         // The name of the message handler to which the message is sent.
         let messageHandlerName = String(message.name)
         let messageBody   = message.body;
-        let closureHandler: HandlerClosure? = self.handlersDictionary[messageHandlerName]
+        let closureHandler: HandlerClosure? = self.handlersDictionary[messageHandlerName!]
         
-        closureHandler?(data: messageBody)
+        closureHandler?(messageBody as AnyObject?)
     }
     
     // MARK: - Bridge initialization.
@@ -45,20 +69,20 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     }
     
     // MARK: - Bridge creation.
-    public class func bridge() -> SwiftJavascriptBridge {
+    open class func bridge() -> SwiftJavascriptBridge {
         let bridge: SwiftJavascriptBridge = SwiftJavascriptBridge()
         return bridge;
     }
     
     // MARK: - Private Methods.
-    private func dataToJSONString(jsonData: AnyObject!) -> String? {
-        if (NSJSONSerialization.isValidJSONObject(jsonData)) {
+    fileprivate func dataToJSONString(_ jsonData: AnyObject!) -> String? {
+        if (JSONSerialization.isValidJSONObject(jsonData)) {
             do {
-                let jsonData = try NSJSONSerialization.dataWithJSONObject(jsonData, options: NSJSONWritingOptions())
-                let dataString = String(data: jsonData, encoding: NSASCIIStringEncoding)!
+                let jsonData = try JSONSerialization.data(withJSONObject: jsonData, options: JSONSerialization.WritingOptions())
+                let dataString = String(data: jsonData, encoding: String.Encoding.ascii)!
                 return dataString
             } catch {
-                print(kJSONDataCreationErrorText + String(error))
+                print(kJSONDataCreationErrorText + String(describing: error))
                 return nil
             }
         }
@@ -66,7 +90,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         return nil
     }
     
-    private func createJSFunctionName(jsFunctionName: String, functionArguments: AnyObject?) -> String {
+    fileprivate func createJSFunctionName(_ jsFunctionName: String, functionArguments: AnyObject?) -> String {
         var functionName = String(jsFunctionName)
         
         if (functionArguments?.count > 0) {
@@ -74,28 +98,28 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         } else if let aString = functionArguments as? String {
             functionName += "(\"" + aString + "\")"
         } else if let aDouble = functionArguments as? Double {
-            if (aDouble % 1 > 0) {
+            if (aDouble.truncatingRemainder(dividingBy: 1) > 0) {
                 // Is a Double.
-                functionName = String(format: "%@(\"%.9f\")", functionName, aDouble)
+                functionName = String(format: "%@(\"%.9f\")", functionName!, aDouble)
             } else {
                 // Is an Int.
-                functionName = String(format: "%@(\"%.0f\")", functionName, aDouble)
+                functionName = String(format: "%@(\"%.0f\")", functionName!, aDouble)
             }
         } else {
             functionName += "()"
         }
         
-        return functionName
+        return functionName!
     }
     
-    private func callJSFunction(jsHandler: Dictionary<String, AnyObject>) {
+    fileprivate func callJSFunction(_ jsHandler: Dictionary<String, AnyObject>) {
         let handlerName: String = jsHandler[kJSHandlerNameKey] as! String
         let handleData: AnyObject? = jsHandler[kJSDataToSendKey]
         let callBackClosure: HandlerClosure? = self.callBackDictionary[handlerName]
         
         let functionName = String(self.createJSFunctionName(handlerName, functionArguments: handleData))
         
-        self.jsWebView?.evaluateJavaScript(functionName, completionHandler: { (response : AnyObject?, error: NSError?) -> Void in
+        self.jsWebView?.evaluateJavaScript(functionName!, completionHandler: { (response : AnyObject?, error: NSError?) -> Void in
             if (error != nil) {
                 print(kEvaluateScriptErrorText + functionName + " - " + String(error))
             } else {
@@ -107,7 +131,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     }
     
     // MARK: - WKNavigationDelegate implementation.
-    public func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+    open func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         for jsHandler in self.jsHandlersList {
             self.callJSFunction(jsHandler as Dictionary<String, AnyObject>)
         }
@@ -125,9 +149,9 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         - handlerClosure: The closure (block code) that is going to be called when
     JavaScript call the Swift 'handlerName' handler.
     */
-    public func bridgeAddHandler(handlerName: String, handlerClosure: HandlerClosure) {
+    open func bridgeAddHandler(_ handlerName: String, handlerClosure: @escaping HandlerClosure) {
         self.handlersDictionary[handlerName] = handlerClosure;
-        self.jsWebViewConfiguration.userContentController.addScriptMessageHandler(self, name: handlerName)
+        self.jsWebViewConfiguration.userContentController.add(self, name: handlerName)
     }
     
     /**
@@ -137,9 +161,9 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     - Parameters:
         - handlerName: The name of the Swift handler to remove.
     */
-    public func bridgeRemoveHandler(handlerName: String) {
-        self.handlersDictionary.removeValueForKey(handlerName)
-        self.jsWebViewConfiguration.userContentController.removeScriptMessageHandlerForName(handlerName)
+    open func bridgeRemoveHandler(_ handlerName: String) {
+        self.handlersDictionary.removeValue(forKey: handlerName)
+        self.jsWebViewConfiguration.userContentController.removeScriptMessageHandler(forName: handlerName)
     }
     
     /**
@@ -161,8 +185,8 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
         - callBackClosure: The closure (block code) that is going to be called if
     JavaScript function called return something.
     */
-    public func bridgeCallFunction(jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?) {
-        var handler: Dictionary<String, AnyObject> = [kJSHandlerNameKey : jsFunctionName]
+    open func bridgeCallFunction(_ jsFunctionName: String, data: AnyObject?, callBackClosure: HandlerClosure?) {
+        var handler: Dictionary<String, AnyObject> = [kJSHandlerNameKey : jsFunctionName as AnyObject]
         if (data != nil) {
             handler.updateValue(data!, forKey: kJSDataToSendKey)
         }
@@ -171,7 +195,7 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
             self.callBackDictionary[jsFunctionName] = callBackClosure!
         }
         
-        if (self.jsWebView != nil && self.jsWebView?.loading == false) {
+        if (self.jsWebView != nil && self.jsWebView?.isLoading == false) {
             self.callJSFunction(handler as Dictionary)
         } else {
             self.jsHandlersList.append(handler as Dictionary)
@@ -186,13 +210,13 @@ public class SwiftJavascriptBridge: NSObject, WKScriptMessageHandler, WKNavigati
     - Parameters:
         - urlString: The string of the URL to load.
     */
-    public func bridgeLoadScriptFromURL(urlString : String) {
-        let url = NSURL(string: urlString)
+    open func bridgeLoadScriptFromURL(_ urlString : String) {
+        let url = URL(string: urlString)
         if (url != nil) {
-            self.jsWebView = WKWebView(frame: CGRectMake(0, 0, 0, 0), configuration: self.jsWebViewConfiguration)
+            self.jsWebView = WKWebView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), configuration: self.jsWebViewConfiguration)
             self.jsWebView!.navigationDelegate = self;
-            let request = NSURLRequest(URL: url!)
-            self.jsWebView!.loadRequest(request);
+            let request = URLRequest(url: url!)
+            self.jsWebView!.load(request);
         } else {
             NSLog (kURLNotValidErrorText, urlString)
         }
