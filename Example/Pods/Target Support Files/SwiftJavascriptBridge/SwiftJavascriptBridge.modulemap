@@ -1,6 +1,0 @@
-framework module SwiftJavascriptBridge {
-  umbrella header "SwiftJavascriptBridge-umbrella.h"
-
-  export *
-  module * { export * }
-}
